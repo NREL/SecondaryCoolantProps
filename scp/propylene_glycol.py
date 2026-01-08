@@ -1,5 +1,3 @@
-from typing import Tuple
-
 from scp.base_melinder import BaseMelinder
 
 
@@ -8,9 +6,9 @@ class PropyleneGlycol(BaseMelinder):
     A derived fluid class for propylene glycol and water mixtures
     """
 
-    def coefficient_freezing(self) -> Tuple:
+    def coefficient_freezing(self) -> tuple:
         return (
-            (-1.3250e+01, -3.8200e-05, 7.8650e-07, -1.7330e-09),
+            (-1.3250e01, -3.8200e-05, 7.8650e-07, -1.7330e-09),
             (-6.6310e-01, 6.7740e-06, -6.2420e-08, -7.8190e-10),
             (-1.0940e-02, 5.3320e-08, -4.1690e-09, 3.2880e-11),
             (-2.2830e-04, -1.1310e-08, 1.9180e-10),
@@ -18,7 +16,7 @@ class PropyleneGlycol(BaseMelinder):
             (1.4650e-08,),
         )
 
-    def coefficient_viscosity(self) -> Tuple:
+    def coefficient_viscosity(self) -> tuple:
         return (
             (6.8370e-01, -3.0450e-02, 2.5250e-04, -1.3990e-06),
             (3.3280e-02, -3.9840e-04, 4.3320e-06, -1.8600e-08),
@@ -28,7 +26,7 @@ class PropyleneGlycol(BaseMelinder):
             (3.5640e-09,),
         )
 
-    def coefficient_specific_heat(self) -> Tuple:
+    def coefficient_specific_heat(self) -> tuple:
         return (
             (3.8820e03, 2.6990e00, -1.6590e-03, -1.0320e-05),
             (-1.3040e01, 5.0700e-02, -4.7520e-05, 1.5220e-06),
@@ -38,7 +36,7 @@ class PropyleneGlycol(BaseMelinder):
             (-4.9590e-07,),
         )
 
-    def coefficient_conductivity(self) -> Tuple:
+    def coefficient_conductivity(self) -> tuple:
         return (
             (4.5130e-01, 7.9550e-04, 3.4820e-08, -5.9660e-09),
             (-4.7950e-03, -1.6780e-05, 8.9410e-08, 1.4930e-10),
@@ -48,7 +46,7 @@ class PropyleneGlycol(BaseMelinder):
             (2.1040e-11,),
         )
 
-    def coefficient_density(self) -> Tuple:
+    def coefficient_density(self) -> tuple:
         return (
             (1.0180e03, -5.4060e-01, -2.6660e-03, 1.3470e-05),
             (7.6040e-01, -9.4500e-03, 5.5410e-05, -1.3430e-07),

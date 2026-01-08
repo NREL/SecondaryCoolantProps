@@ -67,13 +67,7 @@ class Water(BaseFluid):
         acp3 = -7.79624e-07
         acp4 = 3.220424e-09
 
-        return (
-            acp0
-            + temp * acp1
-            + (temp**2) * acp2
-            + (temp**3) * acp3
-            + (temp**4) * acp4
-        ) * 1000
+        return (acp0 + temp * acp1 + (temp**2) * acp2 + (temp**3) * acp3 + (temp**4) * acp4) * 1000
 
     def freeze_point(self, _=None) -> float:
         """
@@ -102,9 +96,7 @@ class Water(BaseFluid):
         ak3 = 1.497323e-08
         ak4 = -1.48553e-11
 
-        return (
-            ak0 + temp * ak1 + (temp**2) * ak2 + (temp**3) * ak3 + (temp**4) * ak4
-        )
+        return ak0 + temp * ak1 + (temp**2) * ak2 + (temp**3) * ak3 + (temp**4) * ak4
 
     def density(self, temp: float) -> float:
         """
@@ -126,11 +118,6 @@ class Water(BaseFluid):
         ar5 = -2.8054253e-10
         ar6 = 0.01687985
 
-        return (
-            ar0
-            + temp * ar1
-            + (temp**2) * ar2
-            + (temp**3) * ar3
-            + (temp**4) * ar4
-            + (temp**5) * ar5
-        ) / (1 + ar6 * temp)
+        return (ar0 + temp * ar1 + (temp**2) * ar2 + (temp**3) * ar3 + (temp**4) * ar4 + (temp**5) * ar5) / (
+            1 + ar6 * temp
+        )

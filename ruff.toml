@@ -43,9 +43,11 @@ extend-select = [
 # except for these specific errors
 # Ruff has a list of linting rules to ignore when using the Ruff formatter (as we are): https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules
 ignore = [
-    "COM812",  # missing-trailing-comma
-    "PLR0911", # too-many-return-statements
-    "PLR0912", # too-many-branches
+    "PLR2004", # magic-value-comparison
+]
+
+[lint.per-file-ignores]
+"tests/*" = [
     "PLR0913", # too-many-arguments
-    "PLR0915", # too-many-statements
+    "S101",    # assert
 ]
