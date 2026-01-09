@@ -1,8 +1,10 @@
-import click
 from sys import stderr
-from scp import water, ethyl_alcohol, ethylene_glycol, propylene_glycol, methyl_alcohol
 
-# Add this to .bashrc for nice completion:  eval "$(_SCPROP_COMPLETE=bash_source scprop)"
+import click
+
+from scp import ethyl_alcohol, ethylene_glycol, methyl_alcohol, propylene_glycol, water
+
+# Add this to .bashrc for nice completion: eval "$(_SCPROP_COMPLETE=bash_source scprop)"
 
 fluids = {
     "water": water.Water,

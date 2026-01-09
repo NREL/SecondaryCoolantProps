@@ -15,22 +15,21 @@ from scp import VERSION
 root_dir = Path(__file__).parent.parent.resolve()
 path.insert(0, str(root_dir))
 
-project = 'SecondaryCoolantProps'
-copyright = f'{datetime.date.today().year}, Mitchell, M.; Lee, E.'
-author = 'Matt Mitchell, Edwin Lee'
+project = "SecondaryCoolantProps"
+copyright = f"{datetime.datetime.now(tz=datetime.timezone.utc).date().year}, Mitchell, M.; Lee, E."  # noqa: A001
+author = "Matt Mitchell, Edwin Lee"
 release = VERSION
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ['sphinx.ext.viewcode', 'sphinx.ext.autodoc']
+extensions = ["sphinx.ext.viewcode", "sphinx.ext.autodoc"]
 
-templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+templates_path = ["_templates"]
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
+html_theme = "sphinx_rtd_theme"

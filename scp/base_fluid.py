@@ -12,9 +12,9 @@ class BaseFluid(ABC):
         self,
         t_min: float,
         t_max: float,
-        x: float = None,
-        x_min: float = None,
-        x_max: float = None,
+        x: float | None = None,
+        x_min: float | None = None,
+        x_max: float | None = None,
     ):
         """
         A constructor for a base fluid, that takes a concentration as an argument.
@@ -29,17 +29,12 @@ class BaseFluid(ABC):
         @param x_max: Maximum concentration fraction, from 0 to 1
         """
 
-        self.t_min = None
-        self.t_max = None
         self._set_temperature_limits(t_min, t_max)
 
-        if type(x) is not type(None):  # noqa: E721
-            self.x_min = None
-            self.x_max = None
-            self.x = None
-            self.x_pct = None
+        if isinstance(x, float) and isinstance(x_min, float) and isinstance(x_max, float):
             self._set_concentration_limits(x, x_min, x_max)
 
+    @property
     @abstractmethod
     def fluid_name(self) -> str:
         """
@@ -49,7 +44,6 @@ class BaseFluid(ABC):
 
         @return: string name of the fluid
         """
-        pass
 
     def _set_concentration_limits(self, x: float, x_min: float, x_max: float):
         """
@@ -103,7 +97,7 @@ class BaseFluid(ABC):
 
         if t_min >= t_max:
             msg = f'Fluid "{self.fluid_name}", t_min is greater than t_max'
-            ValueError(msg)
+            raise ValueError(msg)
 
         self.t_min = t_min
         self.t_max = t_max
@@ -138,7 +132,6 @@ class BaseFluid(ABC):
         @param x: Fluid concentration fraction, ranging from 0 to 1
         @return Returns the freezing point of the fluid, in Celsius
         """
-        pass
 
     @staticmethod
     def freeze_point_units() -> str:
@@ -153,7 +146,6 @@ class BaseFluid(ABC):
         @param temp: Fluid temperature, in degrees Celsius
         @return: Returns the dynamic viscosity in [Pa-s]
         """
-        pass
 
     @staticmethod
     def viscosity_units() -> str:
@@ -177,11 +169,10 @@ class BaseFluid(ABC):
         @param temp: Fluid temperature, in degrees Celsius
         @return: Returns the specific heat in [J/kg-K]
         """
-        pass
 
     @staticmethod
     def specific_heat_units() -> str:
-        return 'J/kg-K'
+        return "J/kg-K"
 
     def cp(self, temp: float) -> float:
         """
@@ -201,11 +192,10 @@ class BaseFluid(ABC):
         @param temp: Fluid temperature, in degrees Celsius
         @return: Returns the density in [kg/m3]
         """
-        pass
 
     @staticmethod
     def density_units() -> str:
-        return 'kg/m3'
+        return "kg/m3"
 
     def rho(self, temp: float) -> float:
         """
@@ -225,11 +215,10 @@ class BaseFluid(ABC):
         @param temp: Fluid temperature, in degrees Celsius
         @return: Returns the thermal conductivity in [W/m-K]
         """
-        pass
 
     @staticmethod
     def conductivity_units() -> str:
-        return 'W/m-K'
+        return "W/m-K"
 
     def k(self, temp: float) -> float:
         """
@@ -251,7 +240,7 @@ class BaseFluid(ABC):
 
     @staticmethod
     def prandtl_units() -> str:
-        return '-'
+        return "-"
 
     def pr(self, temp: float = 0.0) -> float:
         """
@@ -273,7 +262,7 @@ class BaseFluid(ABC):
 
     @staticmethod
     def thermal_diffusivity_units() -> str:
-        return 'm2/s'
+        return "m2/s"
 
     def alpha(self, temp: float) -> float:
         """

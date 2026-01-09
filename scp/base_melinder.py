@@ -1,6 +1,5 @@
 from abc import abstractmethod
 from math import exp
-from typing import Tuple
 
 from scp.base_fluid import BaseFluid
 
@@ -27,58 +26,69 @@ class BaseMelinder(BaseFluid):
     """
 
     _ij_pairs = (
-        (0, 0), (0, 1), (0, 2), (0, 3),
-        (1, 0), (1, 1), (1, 2), (1, 3),
-        (2, 0), (2, 1), (2, 2), (2, 3),
-        (3, 0), (3, 1), (3, 2),
-        (4, 0), (4, 1),
-        (5, 0)
+        (0, 0),
+        (0, 1),
+        (0, 2),
+        (0, 3),
+        (1, 0),
+        (1, 1),
+        (1, 2),
+        (1, 3),
+        (2, 0),
+        (2, 1),
+        (2, 2),
+        (2, 3),
+        (3, 0),
+        (3, 1),
+        (3, 2),
+        (4, 0),
+        (4, 1),
+        (5, 0),
     )
 
     @abstractmethod
-    def coefficient_freezing(self) -> Tuple:
+    def coefficient_freezing(self) -> tuple:
         """
         Abstract method; derived classes should override to return the
         coefficient matrix for freezing point.
         """
-        pass
 
     @abstractmethod
-    def coefficient_viscosity(self) -> Tuple:
+    def coefficient_viscosity(self) -> tuple:
         """
         Abstract method; derived classes should override to return the
         coefficient matrix for viscosity.
         """
-        pass
 
     @abstractmethod
-    def coefficient_specific_heat(self) -> Tuple:
+    def coefficient_specific_heat(self) -> tuple:
         """
         Abstract method; derived classes should override to return the
         coefficient matrix for specific heat.
         """
-        pass
 
     @abstractmethod
-    def coefficient_conductivity(self) -> Tuple:
+    def coefficient_conductivity(self) -> tuple:
         """
         Abstract method; derived classes should override to return the
         coefficient matrix for conductivity.
         """
-        pass
 
     @abstractmethod
-    def coefficient_density(self) -> Tuple:
+    def coefficient_density(self) -> tuple:
         """
         Abstract method; derived classes should override to return the
         coefficient matrix for density.
         """
-        pass
 
     def __init__(
-        self, t_min: float, t_max: float, x: float, x_min: float, x_max: float
+        self,
+        t_min: float,
+        t_max: float,
+        x: float,
+        x_min: float,
+        x_max: float,
     ):
-
         """
         A constructor for the Melinder fluid base class
 
@@ -90,10 +100,10 @@ class BaseMelinder(BaseFluid):
         """
 
         super().__init__(t_min, t_max, x, x_min, x_max)
-        self.x_base = None
-        self.t_base = None
+        self.x_base: float | None = None
+        self.t_base: float | None = None
 
-    def _f_prop_t_freeze(self, c_arr: Tuple, x: float) -> float:
+    def _f_prop_t_freeze(self, c_arr: tuple, x: float) -> float:
         """
         General worker function to evaluate fluid properties as
         a function of concentration.
@@ -103,6 +113,11 @@ class BaseMelinder(BaseFluid):
 
         @return:
         """
+
+        if self.x_base is None:
+            raise ValueError("x_base is not set")
+        if self.t_base is None:
+            raise ValueError("t_base is not set")
 
         x = self._check_concentration(x)
 
@@ -118,7 +133,7 @@ class BaseMelinder(BaseFluid):
 
         return f_ret
 
-    def _f_prop(self, c_arr: Tuple, temp: float) -> float:
+    def _f_prop(self, c_arr: tuple, temp: float) -> float:
         """
         General worker function to evaluate fluid properties as
         a function of concentration and temperature.
@@ -128,6 +143,11 @@ class BaseMelinder(BaseFluid):
 
         @return:
         """
+
+        if self.x_base is None:
+            raise ValueError("x_base is not set")
+        if self.t_base is None:
+            raise ValueError("t_base is not set")
 
         temp = self._check_temperature(temp)
 

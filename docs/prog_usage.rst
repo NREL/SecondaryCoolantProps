@@ -30,6 +30,6 @@ Other fluids can also be imported and applied in a similar fashion.
 Other examples::
 
     from scp.ethyl_alcohol import EthylAlcohol
-    from scp.ethylene_glycol imoprt EthyleneGlycol
+    from scp.ethylene_glycol import EthyleneGlycol
     from scp.methyl_alcohol import MethylAlcohol
-    from scp.propylene_glycol import PropyleneGycol
+    from scp.propylene_glycol import PropyleneGlycol

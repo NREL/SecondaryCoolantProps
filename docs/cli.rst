@@ -20,7 +20,6 @@ The command has a help argument with output similar to this (execute manually to
       -t, --temperature FLOAT         Fluid temperature, in degrees Celsius.
                                       [required]
       -q, --quick                     Just report the value, good for scripts
-                                      [default: False]
       --help                          Show this message and exit.
 
 Some example usages::
