@@ -6,8 +6,8 @@ This is intended to be a lightweight library that can be easily imported into an
 
 ## Code Quality
 
-[![Flake8](https://github.com/mitchute/SecondaryCoolantProps/actions/workflows/flake8.yml/badge.svg)](https://github.com/mitchute/SecondaryCoolantProps/actions/workflows/flake8.yml)
-[![Tests](https://github.com/mitchute/SecondaryCoolantProps/actions/workflows/tests.yml/badge.svg)](https://github.com/mitchute/SecondaryCoolantProps/actions/workflows/tests.yml)
+[![Pre-commit](https://github.com/NREL/SecondaryCoolantProps/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/NREL/SecondaryCoolantProps/actions/workflows/pre-commit.yml)
+[![Tests](https://github.com/NREL/SecondaryCoolantProps/actions/workflows/tests.yml/badge.svg)](https://github.com/NREL/SecondaryCoolantProps/actions/workflows/tests.yml)
 
 Code is checked for style and tests executed by GitHub Actions.
 
@@ -19,10 +19,31 @@ Docs are built from Sphinx on ReadTheDocs.org and are available at https://secon
 
 ## Releases
 
-[![PyPIRelease](https://github.com/mitchute/SecondaryCoolantProps/actions/workflows/release.yml/badge.svg)](https://github.com/mitchute/SecondaryCoolantProps/actions/workflows/release.yml)
+[![PyPIRelease](https://github.com/NREL/SecondaryCoolantProps/actions/workflows/release.yml/badge.svg)](https://github.com/NREL/SecondaryCoolantProps/actions/workflows/release.yml)
 
-When a release is tagged, a GitHub Action workflow will create a Python wheel and upload it to the PyPi server.
+When a release is tagged, a GitHub Action workflow will create a Python wheel and upload it to the PyPI server.
 
 To install into an existing Python environment, execute `pip install SecondaryCoolantProps`
 
 Project page: https://pypi.org/project/SecondaryCoolantProps/
+
+## Development
+
+#### Initialize the virtual environment with uv:
+
+`uv sync`
+
+#### Run pre-commit checks:
+
+`uv run pre-commit run -a`
+
+#### Build and publish:
+
+```shell
+uv run build
+uv publish
+```
+
+#### Build the documentation:
+
+`uv run sphinx-build -b html docs docs/_build/html`
