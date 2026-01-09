@@ -16,7 +16,7 @@ root_dir = Path(__file__).parent.parent.resolve()
 path.insert(0, str(root_dir))
 
 project = "SecondaryCoolantProps"
-copyright = f"{datetime.datetime.now(tz=datetime.timezone.utc).date().year}, Mitchell, M.; Lee, E."  # noqa: A001
+copyright = f"{datetime.datetime.now(tz=datetime.timezone.utc).date().year}, Alliance for Energy Innovation, LLC"  # noqa: A001
 author = "Matt Mitchell, Edwin Lee"
 release = VERSION
 
