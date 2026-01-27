@@ -33,6 +33,7 @@ repos:
     rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
+        args: [--no-cache]
         types_or: [markdown, toml, yaml]
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.19.1

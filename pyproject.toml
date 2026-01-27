@@ -9,7 +9,7 @@ description = "Fluid property routines for secondary coolants based on correlati
 readme = "README.md"
 license = "BSD-3-Clause"
 license-files = ["LICENSE"]
-authors = [{ name = "Matt Mitchell", email = "Matt.Mitchell@nrel.gov" }]
+authors = [{ name = "Matt Mitchell", email = "Matt.Mitchell@nlr.gov" }]
 requires-python = ">=3.10"
 dependencies = [
     "click>=8",
@@ -33,9 +33,9 @@ classifiers = [
 scprop = "scp.cli:cli"
 
 [project.urls]
-Repository = "https://github.com/NREL/SecondaryCoolantProps"
+Repository = "https://github.com/NatLabRockies/SecondaryCoolantProps"
 Documentation = "https://secondarycoolantprops.readthedocs.io/"
-Releases = "https://github.com/NREL/SecondaryCoolantProps/releases"
+Releases = "https://github.com/NatLabRockies/SecondaryCoolantProps/releases"
 
 [dependency-groups]
 dev = [

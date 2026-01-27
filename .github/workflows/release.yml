@@ -8,7 +8,6 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v6
 
@@ -23,7 +22,7 @@ jobs:
       - name: Build
         run: uv build
 
-      - name: Deploy on PyPi
+      - name: Deploy on PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
