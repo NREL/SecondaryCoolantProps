@@ -2,28 +2,12 @@ from sys import stderr
 
 import click
 
-from scp import ethyl_alcohol, ethylene_glycol, methyl_alcohol, propylene_glycol, water
+from scp.api import available_fluids, available_properties, get_fluid
 
 # Add this to .bashrc for nice completion: eval "$(_SCPROP_COMPLETE=bash_source scprop)"
 
-fluids = {
-    "water": water.Water,
-    "ethyl_alcohol": ethyl_alcohol.EthylAlcohol,
-    "ethylene_glycol": ethylene_glycol.EthyleneGlycol,
-    "methyl_alcohol": methyl_alcohol.MethylAlcohol,
-    "propylene_glycol": propylene_glycol.PropyleneGlycol,
-}
-fluid_options = click.Choice(list(fluids.keys()))
-properties = (
-    "viscosity",
-    "specific_heat",
-    "density",
-    "conductivity",
-    "prandtl",
-    "thermal_diffusivity",
-    "freeze_point",
-)
-prop_options = click.Choice(properties)
+fluid_options = click.Choice(available_fluids(include_user_defined=False))
+prop_options = click.Choice(available_properties())
 x_range = click.FloatRange(min=0.0, max=1.0)
 
 
@@ -79,10 +63,10 @@ def cli(fluid: str, concentration: float, fluid_prop: str, temperature: float, q
             file=stderr,
         )
     if fluid == "water" or concentration == 0.0:
-        f = water.Water()
+        f = get_fluid("water")
         fluid = "water"
     else:
-        f = fluids[fluid](concentration)
+        f = get_fluid(fluid, concentration=concentration)
 
     if fluid_prop == "freeze_point":
         value = getattr(f, fluid_prop)(concentration)

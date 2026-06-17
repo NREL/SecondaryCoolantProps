@@ -33,6 +33,9 @@ Project page: https://pypi.org/project/SecondaryCoolantProps/
 
 `uv sync`
 
+Use a current `uv` release. This project uses dependency groups and
+`tool.uv.default-groups`, which older `uv` releases may not recognize.
+
 #### Run pre-commit checks:
 
 `uv run pre-commit run -a`

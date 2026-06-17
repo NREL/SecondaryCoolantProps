@@ -1,5 +1,6 @@
 import warnings
 from abc import ABC, abstractmethod
+from numbers import Real
 
 
 class BaseFluid(ABC):
@@ -31,8 +32,8 @@ class BaseFluid(ABC):
 
         self._set_temperature_limits(t_min, t_max)
 
-        if isinstance(x, float) and isinstance(x_min, float) and isinstance(x_max, float):
-            self._set_concentration_limits(x, x_min, x_max)
+        if isinstance(x, Real) and isinstance(x_min, Real) and isinstance(x_max, Real):
+            self._set_concentration_limits(float(x), float(x_min), float(x_max))
 
     @property
     @abstractmethod

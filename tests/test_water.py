@@ -27,6 +27,22 @@ def test_viscosity(water: Water, temp_c: float, expected: float) -> None:
     assert water.viscosity(temp_c) == pytest.approx(expected, rel=0.01)
 
 
+def test_viscosity_above_normal_boiling_range(water: Water) -> None:
+    water.t_max = 120.0
+
+    assert water.viscosity(110.0) == pytest.approx(0.000255, rel=0.01)
+
+
+def test_property_units_are_defined_on_fluid_instances(water: Water) -> None:
+    assert water.viscosity_units() == "Pa-s"
+    assert water.specific_heat_units() == "J/kg-K"
+    assert water.density_units() == "kg/m3"
+    assert water.conductivity_units() == "W/m-K"
+    assert water.prandtl_units() == "-"
+    assert water.thermal_diffusivity_units() == "m2/s"
+    assert water.freeze_point_units() == "C"
+
+
 @pytest.mark.parametrize(
     ("temp_c", "expected"),
     [
