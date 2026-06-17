@@ -1,3 +1,5 @@
+from typing import Any, cast
+
 import pytest
 
 from scp.user_defined import UserDefinedFluid, UserDefinedProperties
@@ -44,7 +46,7 @@ def test_user_defined_fluid_accepts_callable_properties() -> None:
             specific_heat=lambda temp: 3000.0 + 2.0 * temp,
             density=lambda temp: 1000.0 - 0.5 * temp,
             conductivity=lambda temp: 0.3 + 1.0e-3 * temp,
-            freeze_point=lambda x: -30.0 * x,
+            freeze_point=lambda temp: -30.0 * (temp or 0.0),
         ),
     )
 
@@ -58,7 +60,7 @@ def test_user_defined_fluid_accepts_callable_properties() -> None:
 def test_user_defined_properties_reject_invalid_values() -> None:
     with pytest.raises(TypeError, match="viscosity"):
         UserDefinedProperties(
-            viscosity=None,
+            viscosity=cast(Any, None),
             specific_heat=3000.0,
             density=1000.0,
             conductivity=0.3,
@@ -70,7 +72,7 @@ def test_user_defined_properties_reject_invalid_values() -> None:
             specific_heat=3000.0,
             density=1000.0,
             conductivity=0.3,
-            freeze_point=None,
+            freeze_point=cast(Any, None),
         )
 
 
