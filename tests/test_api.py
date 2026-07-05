@@ -42,12 +42,6 @@ def test_get_fluid_returns_built_in_fluid() -> None:
     assert pg.x == pytest.approx(0.4)
 
 
-def test_get_fluid_returns_existing_fluid_instance() -> None:
-    fluid = Water()
-
-    assert get_fluid(fluid) is fluid
-
-
 def test_get_fluid_returns_user_defined_fluid() -> None:
     fluid = get_fluid(
         "user defined",
@@ -103,9 +97,6 @@ def test_get_fluid_rejects_invalid_inputs() -> None:
 
     with pytest.raises(ValueError, match="User-defined options"):
         get_fluid("water", properties={"viscosity": 0.001})
-
-    with pytest.raises(ValueError, match="Existing fluid instances"):
-        get_fluid(Water(), properties={"viscosity": 0.001})
 
     with pytest.raises(ValueError, match="Unexpected user-defined fluid options"):
         get_fluid(

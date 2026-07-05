@@ -18,21 +18,20 @@ _FLUID_FACTORIES: dict[str, FluidFactory] = {
     "methyl_alcohol": MethylAlcohol,
     "propylene_glycol": PropyleneGlycol,
 }
-_PROPERTY_NAMES = (
+_USER_DEFINED_REQUIRED_PROPERTY_KEYS = (
     "viscosity",
     "specific_heat",
     "density",
     "conductivity",
+)
+_PROPERTY_NAMES = (
+    *_USER_DEFINED_REQUIRED_PROPERTY_KEYS,
     "prandtl",
     "thermal_diffusivity",
     "freeze_point",
 )
-_USER_DEFINED_FLUID_KEY = "user_defined"
 _USER_DEFINED_PROPERTY_KEYS = (
-    "viscosity",
-    "specific_heat",
-    "density",
-    "conductivity",
+    *_USER_DEFINED_REQUIRED_PROPERTY_KEYS,
     "freeze_point",
 )
 
@@ -56,7 +55,7 @@ def available_fluids(*, include_user_defined: bool = True) -> tuple[str, ...]:
     """
     fluids = ("water", *_FLUID_FACTORIES.keys())
     if include_user_defined:
-        return (*fluids, _USER_DEFINED_FLUID_KEY)
+        return (*fluids, "user_defined")
     return fluids
 
 
@@ -114,7 +113,7 @@ def _collect_user_defined_options(
         raise ValueError(msg)
 
     missing_properties = [
-        prop_name for prop_name in _USER_DEFINED_PROPERTY_KEYS[:4] if prop_name not in property_values
+        prop_name for prop_name in _USER_DEFINED_REQUIRED_PROPERTY_KEYS if prop_name not in property_values
     ]
     if missing_properties:
         msg = f"User-defined fluid is missing required properties: {', '.join(missing_properties)}"
@@ -135,7 +134,7 @@ def _collect_user_defined_options(
 
 
 def get_fluid(
-    fluid: str | BaseFluid,
+    fluid: str,
     *,
     concentration: float = 0.0,
     properties: UserDefinedProperties | Mapping[str, object] | None = None,
@@ -144,20 +143,15 @@ def get_fluid(
     """
     Construct a fluid from the user-facing API.
 
-    @param fluid: Fluid key, or an existing BaseFluid instance
+    @param fluid: Fluid key
     @param concentration: Mixture concentration fraction for built-in mixture fluids
     @param properties: User-defined property values
     @param user_defined_options: User-defined fluid options and property values
     @return: Fluid instance
     """
-    if isinstance(fluid, BaseFluid):
-        if properties is not None or user_defined_options:
-            msg = "Existing fluid instances do not accept additional user-defined options"
-            raise ValueError(msg)
-        return fluid
 
     fluid_key = _normalize_key(fluid)
-    if (properties is not None or user_defined_options) and fluid_key != _USER_DEFINED_FLUID_KEY:
+    if (properties is not None or user_defined_options) and fluid_key != "user_defined":
         msg = "User-defined options can only be used with the user_defined fluid"
         raise ValueError(msg)
     if fluid_key == "water":
@@ -165,7 +159,7 @@ def get_fluid(
             msg = "Water does not accept a nonzero concentration"
             raise ValueError(msg)
         return Water()
-    if fluid_key == _USER_DEFINED_FLUID_KEY:
+    if fluid_key == "user_defined":
         user_properties, name, t_min, t_max = _collect_user_defined_options(properties, user_defined_options)
 
         return UserDefinedFluid(
