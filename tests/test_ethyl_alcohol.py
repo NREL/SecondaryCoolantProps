@@ -62,3 +62,18 @@ def test_out_of_range_temps() -> None:
     ea = EthylAlcohol(0.4)
     assert ea.density(-50) == pytest.approx(ea.density(ea.t_min), abs=0.01)
     assert ea.density(150) == pytest.approx(ea.density(ea.t_max), abs=0.01)
+
+
+def test_integer_concentration_is_accepted() -> None:
+    # An int concentration should behave the same as the equivalent float.
+    # The constructor guard used to test isinstance(x, float) only, so an int
+    # skipped the concentration setup and crashed on the missing x_min.
+    f_int = EthylAlcohol(0)
+    f_float = EthylAlcohol(0.0)
+    assert f_int.x_pct == f_float.x_pct
+    assert f_int.freeze_point(0) == f_float.freeze_point(0.0)
+
+
+def test_boolean_concentration_is_rejected() -> None:
+    with pytest.raises(TypeError, match="concentration arguments must be real numbers"):
+        EthylAlcohol(False)
