@@ -1,8 +1,8 @@
 from collections.abc import Callable
 from dataclasses import dataclass
-from numbers import Real
 from typing import TypeAlias
 
+from scp._numeric import is_float
 from scp.base_fluid import BaseFluid
 
 TemperatureProperty: TypeAlias = float | Callable[[float], float]
@@ -36,10 +36,10 @@ def _validate_property_value(prop_name: str, prop_value: object) -> None:
     """
     if callable(prop_value):
         return
-    if isinstance(prop_value, Real) and not isinstance(prop_value, bool):
+    if is_float(prop_value):
         return
 
-    msg = f'User-defined property "{prop_name}" must be a real number or callable'
+    msg = f'User-defined property "{prop_name}" must be an int, float, or callable'
     raise TypeError(msg)
 
 

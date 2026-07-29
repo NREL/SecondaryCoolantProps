@@ -123,6 +123,32 @@ def test_get_fluid_rejects_invalid_inputs() -> None:
         )
 
 
+@pytest.mark.parametrize("concentration", [float("nan"), float("inf"), float("-inf")])
+def test_get_fluid_rejects_non_finite_concentrations(concentration: float) -> None:
+    with pytest.raises(ValueError, match="concentration arguments must be finite"):
+        get_fluid("propylene_glycol", concentration=concentration)
+
+
+@pytest.mark.parametrize("option_name", ["t_min", "t_max"])
+@pytest.mark.parametrize("option_value", [float("nan"), float("inf"), float("-inf")])
+def test_get_fluid_rejects_non_finite_temperature_limits(option_name: str, option_value: float) -> None:
+    properties = UserDefinedProperties(
+        viscosity=0.001,
+        specific_heat=3200.0,
+        density=1050.0,
+        conductivity=0.42,
+    )
+
+    def create_fluid_with_invalid_limit() -> None:
+        if option_name == "t_min":
+            get_fluid("user_defined", properties=properties, t_min=option_value)
+        else:
+            get_fluid("user_defined", properties=properties, t_max=option_value)
+
+    with pytest.raises(ValueError, match=rf'"{option_name}" must be finite'):
+        create_fluid_with_invalid_limit()
+
+
 def test_get_fluid_returns_instances_for_property_evaluation() -> None:
     water = get_fluid("water")
     pg = get_fluid("propylene glycol", concentration=0.4)

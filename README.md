@@ -50,3 +50,7 @@ uv publish
 #### Build the documentation:
 
 `uv run sphinx-build -b html docs docs/_build/html`
+
+## Software Record
+
+[`SWR-26-025`](https://doi.org/10.11578/dc.20260427.2)

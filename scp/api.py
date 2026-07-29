@@ -1,7 +1,8 @@
 from collections.abc import Callable, Mapping
-from numbers import Real
+from math import isfinite
 from typing import cast
 
+from scp._numeric import is_float
 from scp.base_fluid import BaseFluid
 from scp.ethyl_alcohol import EthylAlcohol
 from scp.ethylene_glycol import EthyleneGlycol
@@ -76,10 +77,15 @@ def _float_option(option_name: str, option_value: object) -> float:
     @param option_value: User-defined option value
     @return: Float value
     """
-    if isinstance(option_value, Real) and not isinstance(option_value, bool):
-        return float(option_value)
+    if is_float(option_value):
+        float_value = float(option_value)
+        if isfinite(float_value):
+            return float_value
 
-    msg = f'User-defined option "{option_name}" must be a real number'
+        msg = f'User-defined option "{option_name}" must be finite'
+        raise ValueError(msg)
+
+    msg = f'User-defined option "{option_name}" must be an int or float'
     raise TypeError(msg)
 
 

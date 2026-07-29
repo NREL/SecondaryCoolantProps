@@ -96,11 +96,26 @@ def test_user_defined_fluid_rejects_invalid_temperature_limits() -> None:
         make_user_defined_fluid(t_min=10.0, t_max=10.0)
 
 
+@pytest.mark.parametrize("option_name", ["t_min", "t_max"])
+@pytest.mark.parametrize("option_value", [float("nan"), float("inf"), float("-inf")])
+def test_user_defined_fluid_rejects_non_finite_temperature_limits(option_name: str, option_value: float) -> None:
+    with pytest.raises(ValueError, match="temperature limits must be finite"):
+        make_user_defined_fluid(**{option_name: option_value})
+
+
 def test_user_defined_fluid_rejects_invalid_concentration_limits() -> None:
     fluid = make_user_defined_fluid()
 
     with pytest.raises(ValueError, match="x_min is greater than x_max"):
         fluid._set_concentration_limits(0.5, 0.6, 0.4)
+
+
+@pytest.mark.parametrize("option_value", [float("nan"), float("inf"), float("-inf")])
+def test_user_defined_fluid_rejects_non_finite_concentration_limits(option_value: float) -> None:
+    fluid = make_user_defined_fluid()
+
+    with pytest.raises(ValueError, match="concentration arguments must be finite"):
+        fluid._set_concentration_limits(option_value, 0.2, 0.8)
 
 
 def test_user_defined_fluid_checks_concentration_limits() -> None:
