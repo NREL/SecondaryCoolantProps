@@ -32,10 +32,16 @@ class BaseFluid(ABC):
 
         self._set_temperature_limits(t_min, t_max)
 
-        concentration_values = (x, x_min, x_max)
-        if all(value is None for value in concentration_values):
+        if x is None and x_min is None and x_max is None:
             return
-        if all(isinstance(value, Real) and not isinstance(value, bool) for value in concentration_values):
+        if (
+            isinstance(x, Real)
+            and not isinstance(x, bool)
+            and isinstance(x_min, Real)
+            and not isinstance(x_min, bool)
+            and isinstance(x_max, Real)
+            and not isinstance(x_max, bool)
+        ):
             self._set_concentration_limits(float(x), float(x_min), float(x_max))
             return
 
