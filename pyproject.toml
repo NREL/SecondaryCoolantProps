@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "SecondaryCoolantProps"
-version = "1.4"
+version = "1.5"
 description = "Fluid property routines for secondary coolants based on correlations developed by Åke Melinder, 2010 \"Properties of Secondary Working Fluids for Indirect Systems\" 2nd ed., International Institute of Refrigeration."
 readme = "README.md"
 license = "BSD-3-Clause"
