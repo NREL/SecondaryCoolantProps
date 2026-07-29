@@ -1,5 +1,8 @@
 import warnings
 from abc import ABC, abstractmethod
+from math import isfinite
+
+from scp._numeric import is_float
 
 
 class BaseFluid(ABC):
@@ -31,8 +34,14 @@ class BaseFluid(ABC):
 
         self._set_temperature_limits(t_min, t_max)
 
-        if isinstance(x, (int, float)) and isinstance(x_min, (int, float)) and isinstance(x_max, (int, float)):
-            self._set_concentration_limits(x, x_min, x_max)
+        if x is None and x_min is None and x_max is None:
+            return
+        if is_float(x) and is_float(x_min) and is_float(x_max):
+            self._set_concentration_limits(float(x), float(x_min), float(x_max))
+            return
+
+        msg = f'Fluid "{self.fluid_name}", concentration arguments must be ints or floats'
+        raise TypeError(msg)
 
     @property
     @abstractmethod
@@ -55,6 +64,10 @@ class BaseFluid(ABC):
         @param x_max: The maximum concentration fraction to allow, ranging from 0 to 1
         @return: Nothing
         """
+
+        if not all(isfinite(value) for value in (x, x_min, x_max)):
+            msg = f'Fluid "{self.fluid_name}", concentration arguments must be finite'
+            raise ValueError(msg)
 
         if x_min >= x_max:
             msg = f'Developer error: Fluid "{self.fluid_name}", x_min is greater than x_max'
@@ -94,6 +107,10 @@ class BaseFluid(ABC):
         @param t_max: The maximum temperature value to allow, in degrees Celsius
         @return: Nothing
         """
+
+        if not isfinite(t_min) or not isfinite(t_max):
+            msg = f'Fluid "{self.fluid_name}", temperature limits must be finite'
+            raise ValueError(msg)
 
         if t_min >= t_max:
             msg = f'Fluid "{self.fluid_name}", t_min is greater than t_max'

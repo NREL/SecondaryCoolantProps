@@ -57,8 +57,32 @@ def test_freeze_point(pg: float, freeze_point: float) -> None:
     assert PropyleneGlycol(pg).freeze_point(pg) == pytest.approx(freeze_point, abs=0.01)
 
 
+def test_integer_concentration_is_supported() -> None:
+    pg = PropyleneGlycol(0)
+
+    assert pg.x == pytest.approx(0.0)
+    assert pg.density(20) == pytest.approx(9.9852e02, rel=0.001)
+
+
 @pytest.mark.filterwarnings("ignore::UserWarning")
 def test_out_of_range_temps() -> None:
     pg = PropyleneGlycol(0.4)
     assert pg.density(-50) == pytest.approx(pg.density(pg.t_min), abs=0.01)
     assert pg.density(150) == pytest.approx(pg.density(pg.t_max), abs=0.01)
+
+
+def test_missing_base_values_raise_errors() -> None:
+    pg = PropyleneGlycol(0.4)
+
+    pg.x_base = None
+    with pytest.raises(ValueError, match="x_base is not set"):
+        pg._f_prop((), 20.0)
+    with pytest.raises(ValueError, match="x_base is not set"):
+        pg._f_prop_t_freeze((), 0.4)
+
+    pg.x_base = 30.0
+    pg.t_base = None
+    with pytest.raises(ValueError, match="t_base is not set"):
+        pg._f_prop((), 20.0)
+    with pytest.raises(ValueError, match="t_base is not set"):
+        pg._f_prop_t_freeze((), 0.4)

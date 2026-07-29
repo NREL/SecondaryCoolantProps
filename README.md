@@ -33,6 +33,9 @@ Project page: https://pypi.org/project/SecondaryCoolantProps/
 
 `uv sync`
 
+Use a current `uv` release. This project uses dependency groups and
+`tool.uv.default-groups`, which older `uv` releases may not recognize.
+
 #### Run pre-commit checks:
 
 `uv run pre-commit run -a`
@@ -47,3 +50,7 @@ uv publish
 #### Build the documentation:
 
 `uv run sphinx-build -b html docs docs/_build/html`
+
+## Software Record
+
+[`SWR-26-025`](https://doi.org/10.11578/dc.20260427.2)

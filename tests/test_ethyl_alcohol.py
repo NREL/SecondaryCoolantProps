@@ -72,3 +72,8 @@ def test_integer_concentration_is_accepted() -> None:
     f_float = EthylAlcohol(0.0)
     assert f_int.x_pct == f_float.x_pct
     assert f_int.freeze_point(0) == f_float.freeze_point(0.0)
+
+
+def test_boolean_concentration_is_rejected() -> None:
+    with pytest.raises(TypeError, match="concentration arguments must be ints or floats"):
+        EthylAlcohol(False)

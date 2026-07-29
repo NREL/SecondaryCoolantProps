@@ -6,6 +6,7 @@ Welcome to SecondaryCoolantProps's documentation!
    :caption: Contents:
 
    base_fluids
+   api
    cli
    prog_usage
    fluid_instances
