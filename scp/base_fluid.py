@@ -31,7 +31,7 @@ class BaseFluid(ABC):
 
         self._set_temperature_limits(t_min, t_max)
 
-        if isinstance(x, float) and isinstance(x_min, float) and isinstance(x_max, float):
+        if isinstance(x, (int, float)) and isinstance(x_min, (int, float)) and isinstance(x_max, (int, float)):
             self._set_concentration_limits(x, x_min, x_max)
 
     @property
