@@ -32,8 +32,15 @@ class BaseFluid(ABC):
 
         self._set_temperature_limits(t_min, t_max)
 
-        if isinstance(x, Real) and isinstance(x_min, Real) and isinstance(x_max, Real):
+        concentration_values = (x, x_min, x_max)
+        if all(value is None for value in concentration_values):
+            return
+        if all(isinstance(value, Real) and not isinstance(value, bool) for value in concentration_values):
             self._set_concentration_limits(float(x), float(x_min), float(x_max))
+            return
+
+        msg = f'Fluid "{self.fluid_name}", concentration arguments must be real numbers'
+        raise TypeError(msg)
 
     @property
     @abstractmethod
