@@ -3,6 +3,8 @@ Methyl Alcohol
 
 Provides fluid properties for aqueous mixtures of Methyl Alcohol for temperatures <= 40 C, with concentrations from 0-0.6.
 
+.. include:: _available_properties.inc
+
 Example::
 
     from scp import get_fluid

@@ -7,6 +7,8 @@ Viscosity, specific heat, density, and conductivity are required.  Each property
 can be a constant value or a callable that accepts temperature in Celsius.
 Freeze point is optional and defaults to 0 C.
 
+.. include:: _available_properties.inc
+
 Example with inline property values::
 
     from scp import get_fluid

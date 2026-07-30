@@ -3,6 +3,8 @@ Water
 
 Provides fluid properties for liquid water between 0-100 C.
 
+.. include:: _available_properties.inc
+
 Example::
 
     from scp import get_fluid
