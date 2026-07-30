@@ -3,6 +3,8 @@ Ethylene Glycol
 
 Provides fluid properties for aqueous mixtures of Ethylene Glycol for temperatures <= 100 C, with concentrations from 0-0.6.
 
+.. include:: _available_properties.inc
+
 Example::
 
     from scp import get_fluid
